@@ -1,0 +1,416 @@
+/* Trump Deal special edition — standalone landing page
+   Ported from the ArcXP TrumpDealPage component (styled-components) to plain CSS. */
+
+:root {
+  --navy: #121620;
+  --card-bg: #1c2130;
+  --hairline: rgba(255, 255, 255, 0.25);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--navy);
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* ---------------------------------------------------------------- Hero --- */
+.hero {
+  position: relative;
+  width: 100%;
+  line-height: 0;
+  background: var(--navy);
+  overflow: hidden;
+}
+
+.hero__image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.hero__masthead {
+  position: absolute;
+  top: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 53%;
+  max-width: 766px;
+  line-height: 0;
+  /* Keep above the hero image (which becomes a stacking context via its mask). */
+  z-index: 2;
+}
+
+.hero__masthead img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hero__title {
+  position: absolute;
+  left: 3.8%;
+  right: 3.8%;
+  bottom: 3.2%;
+  max-width: 640px;
+  font-family: "DM Serif Display", serif;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.55);
+  z-index: 2;
+}
+
+.hero__title-top {
+  font-style: italic;
+  font-size: clamp(16px, 4.6vw, 30px);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.hero__title-bottom {
+  font-size: clamp(28px, 7.8vw, 58px);
+  line-height: 1.04;
+}
+
+/* Desktop/tablet: fit the whole hero within the viewport height so the title is
+   visible on load without scrolling. The artwork is never cropped — it is
+   letterboxed against the navy background, and its edges are faded so it melts
+   into that background. Title scales with the smaller of viewport width/height. */
+@media only screen and (min-width: 768px) {
+  .hero {
+    height: 100vh;
+  }
+
+  .hero__image {
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent, #000 16%, #000 84%, transparent),
+      linear-gradient(to bottom, transparent, #000 11%, #000 89%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to right, transparent, #000 16%, #000 84%, transparent),
+      linear-gradient(to bottom, transparent, #000 11%, #000 89%, transparent);
+    mask-composite: intersect;
+  }
+
+  .hero__title {
+    max-width: min(52%, 680px);
+  }
+
+  .hero__title-top {
+    font-size: clamp(20px, min(2.6vw, 3.4vh), 42px);
+  }
+
+  .hero__title-bottom {
+    font-size: clamp(32px, min(5.2vw, 6.6vh), 74px);
+  }
+}
+
+/* -------------------------------------------------------------- Letter --- */
+.letter {
+  padding: 72px 20px 48px;
+}
+
+.letter__inner {
+  max-width: 1086px;
+  margin: 0 auto;
+}
+
+.letter__heading {
+  font-family: "DM Serif Text", serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 50px;
+  letter-spacing: 2px;
+  margin: 0 0 32px;
+}
+
+.letter__body {
+  font-family: "Noto Serif SC", serif;
+  font-size: 24px;
+  line-height: 1.5;
+}
+
+.letter__body p {
+  margin: 0 0 24px;
+}
+
+.letter__body a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(255, 255, 255, 0.5);
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.letter__body a:hover {
+  color: #8fb7ff;
+  text-decoration-color: #8fb7ff;
+}
+
+.letter__footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 32px;
+  margin-top: 48px;
+}
+
+.credits-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 300px;
+  max-width: 100%;
+  height: 76px;
+  border: 2px solid #ffffff;
+  border-radius: 50px;
+  background: var(--navy);
+  color: #ffffff;
+  font-family: "Bitter", serif;
+  font-size: 30px;
+  text-decoration: none;
+}
+
+.credits-button svg {
+  width: 26px;
+  height: auto;
+}
+
+.editors {
+  display: flex;
+  gap: 40px;
+}
+
+.editor__name {
+  font-family: "Nothing You Could Do", cursive;
+  font-size: 38px;
+  line-height: 1.1;
+}
+
+.editor__role {
+  font-family: "Bodoni Moda", serif;
+  font-size: 18px;
+}
+
+/* --------------------------------------------------------- Month tabs --- */
+.month-tabs {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+}
+
+.month-tabs::-webkit-scrollbar {
+  height: 6px;
+}
+
+.month-tabs::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.month-tab {
+  flex: 0 0 auto;
+  min-width: 250px;
+  height: 100px;
+  padding: 0 16px;
+  border: none;
+  border-right: 1px solid var(--hairline);
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: "Bitter", serif;
+  font-weight: 700;
+  font-size: 30px;
+  background: var(--navy);
+  color: #ffffff;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.month-tab:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.month-tab.is-active {
+  background: #ffffff;
+  color: var(--navy);
+}
+
+/* --------------------------------------------------------- Story grid --- */
+.month-grid {
+  display: none;
+  grid-template-columns: repeat(2, minmax(0, 493px));
+  justify-content: center;
+  column-gap: 100px;
+  row-gap: 52px;
+  max-width: 1186px;
+  margin: 0 auto;
+  padding: 56px 20px 80px;
+}
+
+.month-grid.is-active {
+  display: grid;
+}
+
+.card {
+  display: block;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.card__section {
+  font-family: "Bitter", serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.card__image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  display: block;
+  background: var(--card-bg);
+}
+
+.card__headline {
+  font-family: "Bitter", serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 16px;
+}
+
+.card__byline {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 14px;
+  text-transform: uppercase;
+  margin-top: 12px;
+}
+
+/* -------------------------------------------------------------- Staff --- */
+.staff {
+  padding: 48px 20px 96px;
+}
+
+.staff__heading {
+  font-family: "DM Serif Display", serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 50px;
+  text-align: center;
+  margin: 0 0 56px;
+}
+
+.staff__grid {
+  column-count: 2;
+  column-gap: 80px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.staff__group {
+  break-inside: avoid;
+  margin-bottom: 40px;
+}
+
+.staff__group-title {
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: 400;
+  font-size: 26px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.staff__member {
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 1.6;
+}
+
+.footer-note {
+  text-align: center;
+  font-family: "Bitter", serif;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 0 20px 48px;
+}
+
+/* --------------------------------------------------------- Responsive --- */
+@media only screen and (max-width: 1023px) {
+  .month-grid {
+    grid-template-columns: minmax(0, 493px);
+    column-gap: 0;
+    row-gap: 36px;
+    padding: 32px 16px 56px;
+  }
+
+  .month-tab {
+    min-width: 165px;
+    height: 70px;
+    font-size: 18px;
+  }
+
+  .card__image {
+    height: 220px;
+  }
+
+  .card__section {
+    font-size: 14px;
+  }
+
+  .card__headline {
+    font-size: 22px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .letter__heading {
+    font-size: 34px;
+    margin-bottom: 24px;
+  }
+
+  .letter__body {
+    font-size: 18px;
+  }
+
+  .credits-button {
+    width: 220px;
+    height: 60px;
+    font-size: 24px;
+  }
+
+  .editor__name {
+    font-size: 30px;
+  }
+
+  .staff__heading {
+    font-size: 32px;
+    margin-bottom: 40px;
+  }
+
+  .staff__grid {
+    column-count: 1;
+  }
+}
